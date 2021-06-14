@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "6a244b34-aebc-4c34-b74e-f04abcc1adb9",
+		"name": "API For Tenant",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/viewset/tenant/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"viewset",
+								"tenant",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 23 May 2021 19:01:15 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.8.5"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept, Cookie"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, POST, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "649"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Sunil Shrestha\",\n        \"phone_number\": \"9868608816\",\n        \"email\": \"sshrestha384@gmail.com\",\n        \"house_no\": \"101\",\n        \"room_rent\": 3750,\n        \"electricity\": 3333,\n        \"wifi\": 3333\n    },\n    {\n        \"id\": 3,\n        \"name\": \"Anish Poudel\",\n        \"phone_number\": \"9846859792\",\n        \"email\": \"aww_ness@gmail.com\",\n        \"house_no\": \"678\",\n        \"room_rent\": 3750,\n        \"electricity\": 120,\n        \"wifi\": 1200\n    },\n    {\n        \"id\": 4,\n        \"name\": \"Safal Thapa\",\n        \"phone_number\": \"9865029464\",\n        \"email\": \"isafalthapa@gmail.com\",\n        \"house_no\": \"101\",\n        \"room_rent\": 3750,\n        \"electricity\": 456,\n        \"wifi\": 1200\n    },\n    {\n        \"id\": 5,\n        \"name\": \"Anish Hamal\",\n        \"phone_number\": \"9847844911\",\n        \"email\": \"anishhamal44911@gmail.com\",\n        \"house_no\": \"12345\",\n        \"room_rent\": 3750,\n        \"electricity\": 120,\n        \"wifi\": 890\n    }\n]"
+				}
+			]
+		}
+	]
+}

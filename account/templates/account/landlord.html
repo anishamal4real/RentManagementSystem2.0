@@ -1,0 +1,53 @@
+{% extends 'account/base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+    <div class="col-md-5">
+        <h5>Welcome to the LandLords Page</h5>
+        <hr>
+        <div class="card card-body">
+            <a class="btn btn-primary  btn-sm btn-block" href="">Edit Landlord Information</a>
+            <table class="table table-sm">
+                <tr>
+                    
+                    <th>Name of the LandLord</th>
+                </tr>
+                {% for i in landlords %}
+                <tr> <td> {{ i.name }} </td> </tr>
+{% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <h5>Landlord Information</h5>
+        <hr>
+        <div class="card card-body">
+            <a class="btn btn-primary  btn-sm btn-block" href="">Show Information </a>
+            <table class="table table-sm">
+                <tr>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>House Number </th>
+                    
+                </tr>
+
+              
+                {% for i in landlords %}
+                <tr>
+                    <td> {{i.email}} </td>
+                    <td>{{i.phone_number}} </td>
+                    <td>{{i.house_no}} </td>
+                   
+                </tr>
+{% endfor %}
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

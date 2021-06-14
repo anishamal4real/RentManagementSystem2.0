@@ -1,0 +1,62 @@
+{% extends 'account/base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+    <div class="col-md-5">
+        <h5>Welcome to the Tenants Page</h5>
+        <hr>
+        <div class="card card-body">
+            <a class="btn btn-primary  btn-sm btn-block" href="">Edit Tenants Information</a>
+            <table class="table table-sm">
+                <tr>
+
+                    <th>Name of the Tenants </th>
+                </tr>
+                {% for t in tenants %}
+                <tr>
+                    <td> {{ t.name }} </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <h5>Tenant Information</h5>
+        <hr>
+        <div class="card card-body">
+            <a class="btn btn-primary  btn-sm btn-block" href="">Show Information </a>
+            <table class="table table-sm">
+                <tr>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th> House Number </th>
+                    <th>Room Rent </th>
+                    <th>Electricity </th>
+                    <th> Wifi </th>
+
+
+                </tr>
+
+
+                {% for t in tenants %}
+                <tr>
+                    <td> {{t.email}} </td>
+                    <td>{{t.phone_number}} </td>
+                    <td>{{t.house_no}} </td>
+                    <td> {{t.room_rent}}</td>
+                    <td> {{t.electricity}}</td>
+                    <td> {{t.wifi}}</td>
+                
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
