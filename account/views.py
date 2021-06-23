@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm, Password
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import CreateUserForm
-from .serializers import TenantSerializer, LandlordSerializer, RentSerializer
+from .serializers import CustomUserSerializer, TenantSerializer, LandlordSerializer, RentSerializer
 from django.views.decorators.csrf import csrf_exempt
 from .models import Tenant, Landlord, Rent
 from django.contrib.auth.decorators import login_required
@@ -27,6 +27,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import Http404
 
+class CustomUserViewSet(viewsets.ModelViewSet):
+    serializer_class=CustomUserSerializer
+    queryset= CustomUser.objects.all()
+
 class TenantViewSet(viewsets.ModelViewSet):
     serializer_class= TenantSerializer
     queryset= Tenant.objects.all()
@@ -41,122 +45,6 @@ class RentViewSet(viewsets.ModelViewSet):
     serializer_class= RentSerializer
     queryset= Rent.objects.all()
 
-'''
-#For showcasing the details of Tenant
-class TenantAPIView(APIView):
-    def get(self,request):
-        tenants= Tenant.objects.all()
-        serializer=TenantSerializer(tenants, many=True)
-        return Response(serializer.data)
-
-    def post(self,request):
-        serializer=TenantSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class TenantDetailAPIView(APIView):
-    def get_object(self, pk):
-        try:
-            return Tenant.objects.get(id=pk)
-        except Tenant.DoesNotExist:
-            raise Http404("There is no such tenant.")
-
-    def get(self, request, pk):
-        article = self.get_object(pk)
-        serializer = TenantSerializer(article)
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        tenant = self.get_object(pk)
-        serializer = TenantSerializer(tenant, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk):
-        tenant= self.get_object(pk)
-        tenant.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-class TenantListGenericAPIView(generics.ListCreateAPIView):
-    queryset = Tenant.objects.all()
-    serializer_class = TenantSerializer
-    lookup_field= 'id'
-    #authentication_classes= [SessionAuthentication, BasicAuthentication]
-    authentication_classes= [TokenAuthentication]
-    permission_classes=[IsAuthenticated]
-
-
-class TenantDetailGenericAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Tenant.objects.all()
-    serializer_class = TenantSerializer
-
-# For showcasing the details of the landlord
-class LandlordAPIView(APIView):
-    def get(self,request):
-        tenants= Landlord.objects.all()
-        serializer=LandlordSerializer(tenants, many=True)
-        return Response(serializer.data)
-
-    def post(self,request):
-        serializer=LandlordSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class LandlordDetailAPIView(APIView):
-    def get_object(self, pk):
-        try:
-            return Landlord.objects.get(id=pk)
-        except Landlord.DoesNotExist:
-            raise Http404("There is no such landlord.")
-
-    def get(self, request, pk):
-        landlord = self.get_object(pk)
-        serializer = LandlordSerializer(landlord)
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        landlord = self.get_object(pk)
-        serializer = LandlordSerializer(landlord, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk):
-        landlord= self.get_object(pk)
-        landlord.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-class LandlordListGenericAPIView(generics.ListCreateAPIView):
-    queryset = Landlord.objects.all()
-    serializer_class = LandlordSerializer
-    lookup_field= 'id'
-    #authentication_classes= [SessionAuthentication, BasicAuthentication]
-    authentication_classes= [TokenAuthentication]
-    permission_classes=[IsAuthenticated]
-
-
-class LandlordDetailGenericAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Landlord.objects.all()
-    serializer_class = LandlordSerializer
-
-class RentDetailGenericAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Rent.objects.all()
-    serializer_class = RentSerializer
-
-
-
-
-
-
-
-'''
 def home(request):
     return HttpResponse('This is the home page.')
 def tenant(request):
@@ -253,10 +141,11 @@ def edit_profile(request):
         args = {'form': form}
         return render(request, 'account/edit_profile.html', args)
 
-
-def create_profile(sender, instance, created, *args, **kwargs):
-    # ignore if this is an existing User
-    if not created:
-        return
-    CustomUser.objects.create(user=instance)
-post_save.connect(create_profile, sender=CustomUser)
+def view_tenant(request):
+    if request.method=='POST':
+        if id:
+             tenant = Tenant.objects.get(pk=id)
+    else:
+        user = request.user
+    args = {'user': user}
+    return render(request, 'account/profile.html', args)  

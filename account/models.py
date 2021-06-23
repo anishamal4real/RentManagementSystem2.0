@@ -64,12 +64,18 @@ class Rent(models.Model):
     def __str__(self):
         return self.tenant.name or ''
 
-class UserProfile(models.Model):
+class UserProfile(models.Model):   
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     def __str__(self):
-        return self.user
-
-
+        return str(self.user)
+    @receiver(post_save, sender=CustomUser) 
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfile.objects.create(user=instance)
+    @receiver(post_save, sender=CustomUser)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
+        
 
 
 

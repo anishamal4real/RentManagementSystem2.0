@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+from .models import CustomUser, Tenant, UserProfile
 from django import forms
 
 
@@ -8,6 +8,17 @@ class CreateUserForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'password1', 'password2']
+
+class TenantDescriptionForm(forms.ModelForm):
+    class Meta:
+        model = Tenant
+        fields = ['name','email','user','room_rent','electricity','email','phone_number'] 
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_active= True
+        if commit:
+            user.save()
+        return user
 
 
 class RegistrationForm(UserCreationForm):
@@ -23,15 +34,12 @@ class RegistrationForm(UserCreationForm):
         'password1',
         'password2'
     )
-
     def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
-        user.name = self.cleaned_data['name']
-        user.email = self.cleaned_data['email']
-        user.phone_number = self.cleaned_data['phone_number']
+        username = super().save(commit=False)
+        username.is_active= True
         if commit:
-            user.save()
-        return user
+            username.save()
+        return username
 
 
 class EditProfileForm(UserChangeForm):
