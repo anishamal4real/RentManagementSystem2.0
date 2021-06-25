@@ -151,3 +151,4 @@ STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 
 MEDIA_URL='/images/'
 AUTH_USER_MODEL='account.CustomUser'
+AUTH_PROFILE_MODULE = 'accoint.UserProfile'

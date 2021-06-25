@@ -16,9 +16,12 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import update_session_auth_hash
 from django.urls import reverse
 from .models import CustomUser
-from  account.forms import RegistrationForm,EditProfileForm
+from  account.forms import RegistrationForm,EditProfileForm, EditTenantForm, EditLandlordForm
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.decorators import user_passes_test,login_required
+
  
 
 
@@ -51,6 +54,36 @@ def tenant(request):
     return HttpResponse('This is the page for the tenants.')
 def landlord(request):
     return HttpResponse('This is the page for the landlords.')
+
+def is_tenant(self):
+    if str(self.user_type) == 'Tenant':
+        return True
+    else:
+        return False
+tenant_required = user_passes_test(
+    lambda u: True if u.is_tenant 
+    else False, 
+    login_url='/')
+
+def tenant_login_required(view_func):
+    decorated_view_func = login_required(tenant_required(view_func), login_url='/')
+    return decorated_view_func
+
+
+def is_landlord(self):
+    if str(self.user_type) == 'Landlord':
+        return True
+    else:
+        return False
+landlord_required = user_passes_test(
+    lambda u: True if u.is_tenant 
+    else False, 
+    login_url='/')
+
+def landlord_login_required(view_func):
+    decorated_view_func = login_required(landlord_required(view_func), login_url='/')
+    return decorated_view_func
+
 
 # Create your views here.
 @login_required
@@ -140,7 +173,7 @@ def edit_profile(request):
         form = EditProfileForm(instance=request.user)
         args = {'form': form}
         return render(request, 'account/edit_profile.html', args)
-
+@tenant_login_required
 def view_tenant(request):
     if request.method=='POST':
         if id:
@@ -148,4 +181,45 @@ def view_tenant(request):
     else:
         user = request.user
     args = {'user': user}
-    return render(request, 'account/profile.html', args)  
+    return render(request, 'account/tenantinfo.html', args) 
+
+@tenant_login_required
+def edit_tenant(request):
+    if request.method == 'POST':
+        form =EditTenantForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('view_tenant'))
+            #GET
+    else:
+        form = EditTenantForm(instance=request.user)
+        args = {'form': form}
+        return render(request, 'account/edit_tenant.html', args)
+
+@landlord_login_required
+def view_landlord(request):
+    if request.method=='POST':
+        if id:
+             tenant = Landlord.objects.get(pk=id)
+    else:
+        user = request.user
+    args = {'user': user}
+    return render(request, 'account/landlordinfo.html', args) 
+
+@landlord_login_required
+def edit_landlord(request):
+    if request.method == 'POST':
+        form =EditTenantForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('view_landlord'))
+            #GET
+    else:
+        form = EditLandlordForm(instance=request.user)
+        args = {'form': form}
+        return render(request, 'account/edit_landlord.html', args)
+
+
+
