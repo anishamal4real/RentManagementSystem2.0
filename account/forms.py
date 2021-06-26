@@ -12,7 +12,7 @@ class CreateUserForm(UserCreationForm):
 class EditTenantForm(forms.ModelForm):
     class Meta:
         model = Tenant
-        fields = ['name','email','user','room_rent','electricity','email','phone_number'] 
+        fields = ['name','room_rent','electricity','email','phone_number'] 
     def save(self, commit=True):
         user = super().save(commit=False)
         user.is_active= True

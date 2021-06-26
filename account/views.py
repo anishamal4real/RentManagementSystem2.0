@@ -190,7 +190,7 @@ def edit_tenant(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('view_tenant'))
+            return redirect('home')
             #GET
     else:
         form = EditTenantForm(instance=request.user)
