@@ -12,18 +12,18 @@ class CreateUserForm(UserCreationForm):
 class EditTenantForm(forms.ModelForm):
     class Meta:
         model = Tenant
-        fields = ['name','room_rent','electricity','email','phone_number'] 
+        fields = ['room_rent','electricity','house_no'] 
     def save(self, commit=True):
         user = super().save(commit=False)
         user.is_active= True
         if commit:
-            user.save()
+           user.save()
         return user
 
 class EditLandlordForm(forms.ModelForm):
     class Meta:
         model=Landlord
-        fields=['name','email','phone_number','house_no','user']
+        fields=['house_no']
     def save(self,commit=True):
         user=super().save(commit=False)
         user.is_active=True
@@ -32,7 +32,6 @@ class EditLandlordForm(forms.ModelForm):
         return user
 
 class RegistrationForm(UserCreationForm):
-    # email = forms.EmailField(required=True)
     class Meta:
         model = CustomUser
         fields = (
@@ -41,8 +40,10 @@ class RegistrationForm(UserCreationForm):
         'email',
         'user_type',
         'phone_number',
+        'is_tenant',
         'password1',
-        'password2'
+        'password2',
+        'is_landlord',
     )
     def save(self, commit=True):
         username = super().save(commit=False)
@@ -61,7 +62,7 @@ class EditProfileForm(UserChangeForm):
             'email',
             'username',
             'name',
-            'user_type',
+            
             
         )
 

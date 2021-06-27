@@ -19,8 +19,11 @@ urlpatterns = [path('', views.home, name="home"),
                path('viewset/<int:pk>/', include(router.urls)),
                path('profile/', views.view_profile, name='view_profile'),
                path('profile/edit/', views.edit_profile, name='edit_profile'),
-               path('tenant/',views.edit_tenant, name='edit_tenant'),
-               path('landlord/edit', views.edit_landlord, name='edit_landlord'),
+               path('tenant/',views.view_tenant, name='view_tenant'),
+               path('tenant/edit/',views.edit_tenant, name='edit_tenant'),
+               path('landlord/', views.view_landlord, name='view_landlord'),
+               path('landlord/edit/', views.edit_landlord, name='edit_landlord'),
+
 ]              
                
               

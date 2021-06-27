@@ -2,14 +2,16 @@
 
 
 {% block content %}
-<title>Profile</title>
+<title>Landlord Profile</title>
 
 <div class="container">
-    <h1>Profile</h1>
+    <h1>Landlord Information </h1>
     <p>Username: {{ user.username }}</p>
     <p>Name: {{ user.name }}</p>
     <p>Email: {{ user.email }}</p>
     <p>Phone: {{ user.phone_number}}</p>
+    <button><a href="{% url 'edit_landlord' %}">  Edit your information...</a> </button>
+
     
 </div>
 
