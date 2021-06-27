@@ -80,11 +80,11 @@ class Tenant(models.Model):
 
 
 class Landlord(models.Model):
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     house_no = models.CharField(max_length=200, null=True)
     is_landlord = models.BooleanField('Landlord', default=True)
-    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     def __str__(self):
-        return self.user.name or ''
+        return self.luser.name or ''
     '''def create_lprofile(sender, instance, created, *args, **kwargs):
     # ignore if this is an existing User
         if not created:

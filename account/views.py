@@ -166,7 +166,7 @@ def edit_tenant(request):
             return HttpResponseRedirect(reverse('view_tenant'))
             
     else:
-        form = EditTenantForm(instance=request.user)
+        form = EditTenantForm(instance=request.tuser)
         args = {'form': form}
         return render(request, 'account/edit_tenant.html', args)
 
@@ -175,7 +175,7 @@ def edit_tenant(request):
 def view_landlord(request):
     if request.method=='POST':
         if id:
-             tenant = Landlord.objects.get(pk=id)
+             landlord = Landlord.objects.get(pk=id)
     else:
         user = request.user
     args = {'user': user}
@@ -185,7 +185,7 @@ def view_landlord(request):
 @landlord_required
 def edit_landlord(request):
     if request.method == 'POST':
-        form =EditTenantForm(request.POST, instance=request.user)
+        form =EditLandlordForm(request.POST, instance=request.user)
 
         if form.is_valid():
             form.save()
