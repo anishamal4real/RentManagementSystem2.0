@@ -25,11 +25,11 @@ class EditLandlordForm(forms.ModelForm):
         model=Landlord
         fields=['house_no']
     def save(self,commit=True):
-        userl=super().save(commit=False)
-        userl.is_active=True
+        user=super().save(commit=False)
+        user.is_active=True
         if commit:
-            userl.save()
-        return userl
+            user.save()
+        return user
 
 class RegistrationForm(UserCreationForm):
     class Meta:

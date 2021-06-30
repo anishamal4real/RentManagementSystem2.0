@@ -84,7 +84,7 @@ class Landlord(models.Model):
     house_no = models.CharField(max_length=200, null=True)
     is_landlord = models.BooleanField('Landlord', default=True)
     def __str__(self):
-        return self.luser.name or ''
+        return self.user.name or ''
     '''def create_lprofile(sender, instance, created, *args, **kwargs):
     # ignore if this is an existing User
         if not created:

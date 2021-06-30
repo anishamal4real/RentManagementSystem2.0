@@ -45,12 +45,16 @@ class RentViewSet(viewsets.ModelViewSet):
     serializer_class= RentSerializer
     queryset= Rent.objects.all()
 
+    
+'''
 def home(request):
     return HttpResponse('This is the home page.')
 def tenant(request):
     return HttpResponse('This is the page for the tenants.')
 def landlord(request):
     return HttpResponse('This is the page for the landlords.')
+'''
+
 
 
 
